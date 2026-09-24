@@ -3,10 +3,10 @@ export default defineNuxtConfig({
   modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss"],
 
   tailwindcss: {
-    configPath: "~/tailwind.config.ts",
+    configPath: "~~/tailwind.config.ts",
   },
 
-  css: ["~/assets/css/global.css"],
+  css: ["~~/assets/css/global.css"],
 
   runtimeConfig: {
     public: {
