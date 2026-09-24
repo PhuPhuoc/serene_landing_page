@@ -1,0 +1,408 @@
+/* ============================================
+   Serene Saigon — Global Design System
+   Based on ENG Suite Collection + Event Hire Catalogue
+   ============================================ */
+
+/* --- Google Fonts Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Instrument+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&family=Be+Vietnam+Pro:wght@300;400;500&display=swap');
+
+/* --- CSS Custom Properties --- */
+:root {
+  /* Palette */
+  --color-clay: #B88868;
+  --color-sand: #D8B898;
+  --color-cream: #F6E7CD;
+  --color-paper: #FDF9F2;
+  --color-espresso: #2A1A12;
+  --color-foliage: #3A4A38;
+  --color-river-mist: #C8D8D8;
+
+  /* Semantic */
+  --color-bg: var(--color-cream);
+  --color-bg-elevated: var(--color-paper);
+  --color-ground: var(--color-clay);
+  --color-ground-secondary: var(--color-sand);
+  --color-text: var(--color-espresso);
+  --color-text-muted: #5C4A3C;
+  --color-text-light: #6B5A48;
+  --color-accent: var(--color-clay);
+  --color-border: #E3D6C3;
+
+  /* Typography */
+  --font-display: 'Jost', system-ui, sans-serif;
+  --font-body: 'Instrument Sans', 'Be Vietnam Pro', system-ui, sans-serif;
+  --font-body-vi: 'Be Vietnam Pro', 'Instrument Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* Spacing scale (8px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Transitions */
+  --transition-slow: 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-medium: 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-fast: 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Border radius */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+}
+
+/* --- Dark Ground Variant (for dark sections) --- */
+:root [data-ground="dark"],
+.dark-ground {
+  --color-bg: var(--color-espresso);
+  --color-bg-elevated: #3D2E24;
+  --color-text: var(--color-paper);
+  --color-text-muted: #A89080;
+  --color-text-light: #8A7A6A;
+  --color-border: #4A3A2C;
+}
+
+/* --- Base Styles --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+/* --- Typography Scale --- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-6);
+}
+
+h1 {
+  font-size: clamp(2.5rem, 6.4vw, 5.375rem);
+  font-weight: 200;
+  line-height: 1.02;
+}
+
+h2 {
+  font-size: clamp(1.875rem, 4vw, 3.375rem);
+}
+
+h3 {
+  font-size: clamp(1.625rem, 2.5vw, 1.875rem);
+}
+
+h4 {
+  font-size: 1.3125rem;
+  font-weight: 400;
+}
+
+p {
+  margin: 0 0 var(--space-6);
+  max-width: 60ch;
+}
+
+/* Eyebrow / Label text */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+}
+
+/* Mono / Spec text */
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.mono-sm {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* --- Links --- */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(140, 90, 60, 0.35);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-espresso);
+  border-bottom-color: var(--color-espresso);
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-primary {
+  background-color: var(--color-ground);
+  color: var(--color-paper);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-espresso);
+  color: var(--color-paper);
+}
+
+.btn-secondary {
+  background-color: var(--color-paper);
+  color: var(--color-espresso);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-cream);
+  border-color: var(--color-text-muted);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-paper);
+  border: 1px solid rgba(253, 246, 236, 0.4);
+}
+
+.btn-ghost:hover {
+  background-color: rgba(253, 246, 236, 0.1);
+  border-color: var(--color-paper);
+}
+
+/* --- Cards --- */
+.card {
+  background-color: var(--color-bg-elevated);
+  padding: var(--space-8) var(--space-6);
+  border: 1px solid var(--color-border);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 1.625rem;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-3);
+}
+
+.card-body {
+  font-size: 0.90625rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+/* --- Section Utilities --- */
+.section {
+  padding: var(--space-20) 7vw;
+}
+
+.section-ground {
+  background-color: var(--color-ground);
+  color: var(--color-paper);
+}
+
+.section-ground-secondary {
+  background-color: var(--color-ground-secondary);
+}
+
+.section-dark {
+  background-color: var(--color-espresso);
+  color: var(--color-paper);
+}
+
+.section-title {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-8);
+}
+
+/* --- Grid Utilities --- */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: var(--space-5);
+}
+
+.grid-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 2px;
+  background-color: var(--color-border);
+}
+
+.grid-columns > * {
+  background-color: var(--color-bg-elevated);
+}
+
+.grid-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: var(--space-5);
+}
+
+/* --- Animation Utilities --- */
+.fade-in {
+  animation: fadeIn var(--transition-slow) ease-out forwards;
+}
+
+.fade-up {
+  animation: fadeUp var(--transition-slow) ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered children animation */
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeUp var(--transition-slow) ease-out forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 500ms; }
+
+/* --- Image Containers --- */
+.image-portrait {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  width: 100%;
+}
+
+.image-landscape {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  width: 100%;
+}
+
+.image-square {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* --- Vietnamese Typography Support --- */
+:lang(vi) {
+  font-family: var(--font-body-vi);
+  line-height: 1.85; /* Extra line-height for diacritics */
+  font-feature-settings: 'kern' 1, 'liga' 1;
+}
+
+body:lang(vi) {
+  font-family: var(--font-body-vi);
+}
+
+/* --- Selection Color --- */
+::selection {
+  background-color: var(--color-sand);
+  color: var(--color-espresso);
+}
+
+/* --- Scrollbar Styling --- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-sand);
+  border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-clay);
+}
+
+/* --- Focus States --- */
+:focus-visible {
+  outline: 2px solid var(--color-clay);
+  outline-offset: 2px;
+}
+
+/* --- Aspect Ratio Image Placeholder (skeleton) --- */
+.image-skeleton {
+  background: repeating-linear-gradient(
+    135deg,
+    #E8DCC8 0 8px,
+    #E0D2BC 8px 16px
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-4);
+}
+
+/* --- Responsive Typography Helpers --- */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
