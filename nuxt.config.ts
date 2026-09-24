@@ -3,10 +3,10 @@ export default defineNuxtConfig({
   modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss"],
 
   tailwindcss: {
-    configPath: "~/tailwind.config.ts",
+    configPath: "~~/tailwind.config.ts",
   },
 
-  css: ["~/assets/css/global.css"],
+  css: ["~~/assets/css/global.css"],
 
   runtimeConfig: {
     public: {
@@ -20,4 +20,11 @@ export default defineNuxtConfig({
 
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
+
+  app: {
+    head: {
+      title: "Serene Saigon",
+      link: [{ rel: "icon", type: "image/jpeg", href: "/logos/logo.jpg" }],
+    },
+  },
 });
