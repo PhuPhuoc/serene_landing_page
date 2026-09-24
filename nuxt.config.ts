@@ -1,6 +1,18 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss"],
+  modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss", "@nuxtjs/i18n"],
+
+  compatibilityDate: "2025-07-15",
+  devtools: { enabled: true },
+
+  i18n: {
+    defaultLocale: "en",
+    strategy: "prefix_except_default",
+    locales: [
+      { code: "en", language: "en-US", name: "EN" },
+      { code: "vi", language: "vi-VN", name: "VI" },
+    ],
+  },
 
   tailwindcss: {
     configPath: "~~/tailwind.config.ts",
@@ -9,22 +21,23 @@ export default defineNuxtConfig({
   css: ["~~/assets/css/global.css"],
 
   runtimeConfig: {
-    public: {
-      strapiUrl: "http://localhost:1337",
-    },
+    strapiUrl: "http://localhost:1337",
+    strapiToken: "",
   },
 
   future: {
     compatibilityVersion: 4,
   },
 
-  compatibilityDate: "2025-07-15",
-  devtools: { enabled: true },
-
   app: {
     head: {
       title: "Serene Saigon",
       link: [{ rel: "icon", type: "image/jpeg", href: "/logos/logo.jpg" }],
     },
+  },
+
+  routeRules: {
+    "/": { redirect: { to: "/the-club", statusCode: 302 } },
+    "/vi": { redirect: { to: "/vi/the-club", statusCode: 302 } },
   },
 });

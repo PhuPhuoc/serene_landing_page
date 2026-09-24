@@ -4,18 +4,18 @@
    ============================================ */
 
 /* --- Google Fonts Import --- */
-@import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Instrument+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&family=Be+Vietnam+Pro:wght@300;400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Instrument+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&family=Be+Vietnam+Pro:wght@300;400;500&display=swap");
 
 /* --- CSS Custom Properties --- */
 :root {
   /* Palette */
-  --color-clay: #B88868;
-  --color-sand: #D8B898;
-  --color-cream: #F6E7CD;
-  --color-paper: #FDF9F2;
-  --color-espresso: #2A1A12;
-  --color-foliage: #3A4A38;
-  --color-river-mist: #C8D8D8;
+  --color-clay: #b88868;
+  --color-sand: #d8b898;
+  --color-cream: #f6e7cd;
+  --color-paper: #fdf9f2;
+  --color-espresso: #2a1a12;
+  --color-foliage: #3a4a38;
+  --color-river-mist: #c8d8d8;
 
   /* Semantic */
   --color-bg: var(--color-cream);
@@ -23,22 +23,23 @@
   --color-ground: var(--color-clay);
   --color-ground-secondary: var(--color-sand);
   --color-text: var(--color-espresso);
-  --color-text-muted: #5C4A3C;
-  --color-text-light: #6B5A48;
+  --color-text-muted: #5c4a3c;
+  --color-text-light: #6b5a48;
   --color-accent: var(--color-clay);
-  --color-border: #E3D6C3;
+  --color-border: #e3d6c3;
 
   /* Typography */
-  --font-display: 'Jost', system-ui, sans-serif;
-  --font-body: 'Instrument Sans', 'Be Vietnam Pro', system-ui, sans-serif;
-  --font-body-vi: 'Be Vietnam Pro', 'Instrument Sans', system-ui, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-display: "Jost", system-ui, sans-serif;
+  --font-body: "Instrument Sans", "Be Vietnam Pro", system-ui, sans-serif;
+  --font-body-vi: "Be Vietnam Pro", "Instrument Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
   /* Spacing scale (8px base) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
   --space-12: 3rem;
@@ -61,11 +62,11 @@
 :root [data-ground="dark"],
 .dark-ground {
   --color-bg: var(--color-espresso);
-  --color-bg-elevated: #3D2E24;
+  --color-bg-elevated: #3d2e24;
   --color-text: var(--color-paper);
-  --color-text-muted: #A89080;
-  --color-text-light: #8A7A6A;
-  --color-border: #4A3A2C;
+  --color-text-muted: #a89080;
+  --color-text-light: #8a7a6a;
+  --color-border: #4a3a2c;
 }
 
 /* --- Base Styles --- */
@@ -92,7 +93,12 @@ body {
 }
 
 /* --- Typography Scale --- */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: 300;
   line-height: 1.1;
@@ -153,7 +159,9 @@ a {
   color: var(--color-accent);
   text-decoration: none;
   border-bottom: 1px solid rgba(140, 90, 60, 0.35);
-  transition: color var(--transition-fast), border-color var(--transition-fast);
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 a:hover {
@@ -318,12 +326,24 @@ a:hover {
   animation: fadeUp var(--transition-slow) ease-out forwards;
 }
 
-.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
-.stagger-children > *:nth-child(2) { animation-delay: 100ms; }
-.stagger-children > *:nth-child(3) { animation-delay: 200ms; }
-.stagger-children > *:nth-child(4) { animation-delay: 300ms; }
-.stagger-children > *:nth-child(5) { animation-delay: 400ms; }
-.stagger-children > *:nth-child(6) { animation-delay: 500ms; }
+.stagger-children > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+.stagger-children > *:nth-child(2) {
+  animation-delay: 100ms;
+}
+.stagger-children > *:nth-child(3) {
+  animation-delay: 200ms;
+}
+.stagger-children > *:nth-child(4) {
+  animation-delay: 300ms;
+}
+.stagger-children > *:nth-child(5) {
+  animation-delay: 400ms;
+}
+.stagger-children > *:nth-child(6) {
+  animation-delay: 500ms;
+}
 
 /* --- Image Containers --- */
 .image-portrait {
@@ -348,7 +368,9 @@ a:hover {
 :lang(vi) {
   font-family: var(--font-body-vi);
   line-height: 1.85; /* Extra line-height for diacritics */
-  font-feature-settings: 'kern' 1, 'liga' 1;
+  font-feature-settings:
+    "kern" 1,
+    "liga" 1;
 }
 
 body:lang(vi) {
@@ -390,8 +412,8 @@ body:lang(vi) {
 .image-skeleton {
   background: repeating-linear-gradient(
     135deg,
-    #E8DCC8 0 8px,
-    #E0D2BC 8px 16px
+    #e8dcc8 0 8px,
+    #e0d2bc 8px 16px
   );
   display: flex;
   align-items: flex-end;
@@ -405,4 +427,51 @@ body:lang(vi) {
 
 .text-pretty {
   text-wrap: pretty;
+}
+
+/* add-on for header */
+.btn-outline {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+}
+.btn-outline:hover {
+  background: var(--color-text);
+  color: var(--color-paper);
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding: var(--space-6) 7vw;
+  border-bottom: 1px solid var(--color-border);
+}
+.site-header a {
+  border-bottom: 0;
+} /* reset rule `a` toàn cục */
+.site-header__links {
+  display: flex;
+  gap: var(--space-8);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.site-header__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+.nav-link {
+  color: var(--color-text-muted);
+  font-family: var(--font-display);
+}
+.nav-link.is-active {
+  color: var(--color-text);
+  box-shadow: 0 1px 0 currentColor;
+}
+.lang .is-current {
+  font-weight: 500;
+  color: var(--color-text);
 }
