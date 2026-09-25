@@ -12,5 +12,7 @@ export async function strapiFetch<T = unknown>(
   const res = await $fetch(url, {
     headers: { Authorization: `Bearer ${strapiToken}` },
   });
+
+  console.log("Url: ", url);
   return res as T;
 }

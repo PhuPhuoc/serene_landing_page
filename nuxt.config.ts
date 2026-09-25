@@ -37,6 +37,6 @@ export default defineNuxtConfig({
 
   routeRules: {
     "/": { redirect: { to: "/the-club", statusCode: 302 } },
-    "/vi": { redirect: { to: "/vi/the-club", statusCode: 302 } },
+    "/vi": { redirect: { to: "/vi/ve-serene", statusCode: 302 } },
   },
 });

@@ -21,15 +21,12 @@ export default {
         border: "#E3D6C3",
       },
       fontFamily: {
-        display: ["Jost", "system-ui", "sans-serif"],
-        body: ["Instrument Sans", "Be Vietnam Pro", "system-ui", "sans-serif"],
-        mono: ["IBM Plex Mono", "ui-monospace", "monospace"],
+        display: ["var(--font-display)"],
+        body: ["var(--font-body)"],
+        mono: ["var(--font-mono)"],
       },
       fontSize: {
-        eyebrow: [
-          "0.6875rem",
-          { letterSpacing: "0.22em", lineHeight: "1rem" },
-        ],
+        eyebrow: ["0.6875rem", { letterSpacing: "0.22em", lineHeight: "1rem" }],
         mono: ["0.8125rem", { letterSpacing: "0.06em", lineHeight: "1.5rem" }],
       },
       transitionTimingFunction: {

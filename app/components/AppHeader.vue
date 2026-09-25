@@ -1,9 +1,25 @@
+<!-- app/components/AppHeader.vue -->
 <script setup lang="ts">
 const { locale, locales } = useI18n();
 const localePath = useLocalePath();
-const switchLocalePath = useSwitchLocalePath();
 
 const { data: nav } = await useFetch("/api/navigation", { query: { locale } });
+
+const localeSlugMap = useState<Record<string, string | null>>(
+  "localeSlugMap",
+  () => ({}),
+);
+
+type AppLocale = "en" | "vi";
+
+function homeHref(code: AppLocale) {
+  return code === "en" ? "/" : `/${code}`;
+}
+
+function langHref(code: AppLocale) {
+  const slug = localeSlugMap.value[code];
+  return slug ? localePath(`/${slug}`, code) : homeHref(code);
+}
 
 const linkProps = (l: { to: string; external: boolean; newTab: boolean }) => ({
   to: l.external ? l.to : localePath(l.to),
@@ -15,7 +31,7 @@ const linkProps = (l: { to: string; external: boolean; newTab: boolean }) => ({
 <template>
   <header
     v-if="nav"
-    class="flex items-center justify-between gap-3 px-[4vw] border-b border-[var(--color-border)] h-[75px]"
+    class="flex items-center justify-between gap-3 px-[5.5vw] border-b border-[var(--color-border)] h-[75px]"
   >
     <NuxtLink
       :to="localePath('/the-club')"
@@ -32,7 +48,7 @@ const linkProps = (l: { to: string; external: boolean; newTab: boolean }) => ({
     </NuxtLink>
 
     <nav aria-label="Main">
-      <ul class="flex gap-8 list-none m-0 p-0">
+      <ul class="flex gap-5 list-none m-0 p-0">
         <li v-for="l in nav.mainLinks" :key="l.id">
           <NuxtLink
             v-bind="linkProps(l)"
@@ -58,7 +74,7 @@ const linkProps = (l: { to: string; external: boolean; newTab: boolean }) => ({
         <template v-for="(loc, i) in locales" :key="loc.code">
           <span v-if="i" aria-hidden="true">/</span>
           <NuxtLink
-            :to="switchLocalePath(loc.code)"
+            :to="langHref(loc.code)"
             :class="{ 'is-current': loc.code === locale }"
             >{{ loc.name }}</NuxtLink
           >
@@ -68,7 +84,7 @@ const linkProps = (l: { to: string; external: boolean; newTab: boolean }) => ({
       <NuxtLink
         v-if="nav.cta"
         v-bind="linkProps(nav.cta)"
-        class="btn-outline py-2 px-4"
+        class="btn-outline text-sm py-2 px-4"
       >
         {{ nav.cta.label }}
       </NuxtLink>
@@ -78,7 +94,7 @@ const linkProps = (l: { to: string; external: boolean; newTab: boolean }) => ({
 
 <style scoped>
 .nav-link {
-  @apply text-[var(--color-text-muted)] font-display text-[0.9375rem] font-[400] tracking-[0.01em] transition-colors duration-150;
+  @apply text-[var(--color-text-muted)] font-display text-[14px] font-[400] tracking-[0.01em] transition-colors duration-150;
 }
 
 .nav-link:hover {

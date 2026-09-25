@@ -1,4 +1,4 @@
-<!-- app/pages/[...slug].vue -->
+<!-- app/pa<!-- app/pages/[...slug].vue -->
 <script setup lang="ts">
 const route = useRoute();
 const { locale } = useI18n();
@@ -19,6 +19,19 @@ if (error.value || !page.value) {
   });
 }
 
+const localeSlugMap = useState<Record<string, string | null>>(
+  "localeSlugMap",
+  () => ({}),
+);
+
+watch(
+  page,
+  (p) => {
+    if (p?.alternateSlugs) localeSlugMap.value = p.alternateSlugs;
+  },
+  { immediate: true },
+);
+
 useSeoMeta({ title: page.value.title });
 </script>
 
@@ -28,3 +41,4 @@ useSeoMeta({ title: page.value.title });
     <h1 class="section">{{ page.title }}</h1>
   </main>
 </template>
+ges/[...slug].vue -->

@@ -8,8 +8,22 @@ type StrapiPage = {
   slug: string;
   locale: string;
   hidden?: boolean;
-  // sau này thêm: blocks, seo
+  blocks?: unknown[];
 };
+
+const SUPPORTED_LOCALES = ["en", "vi"] as const;
+
+async function getSlugForLocale(documentId: string, locale: string) {
+  try {
+    const res = await strapiFetch<{
+      data: { slug: string; hidden?: boolean } | null;
+    }>(`/pages/${documentId}`, { locale, fields: ["slug", "hidden"] });
+    if (!res.data || res.data.hidden) return null;
+    return res.data.slug;
+  } catch {
+    return null; // bản dịch locale này chưa tồn tại/chưa publish
+  }
+}
 
 export default defineEventHandler(async (event) => {
   const slug = getRouterParam(event, "slug")!;
@@ -18,11 +32,26 @@ export default defineEventHandler(async (event) => {
   const res = await strapiFetch<{ data: StrapiPage[] }>("/pages", {
     locale,
     filters: { slug: { $eq: slug } },
-    // thêm populate cho blocks + seo
+    // ...giữ nguyên populate blocks bạn đã thêm
   });
 
   const page = res.data[0];
-  if (!page || page.hidden)
+  if (!page || page.hidden) {
     throw createError({ statusCode: 404, statusMessage: "Page not found" });
-  return page;
+  }
+
+  const otherLocales = SUPPORTED_LOCALES.filter((l) => l !== locale);
+  const alternates = await Promise.all(
+    otherLocales.map(
+      async (l) => [l, await getSlugForLocale(page.documentId, l)] as const,
+    ),
+  );
+
+  return {
+    ...page,
+    alternateSlugs: {
+      [locale]: page.slug,
+      ...Object.fromEntries(alternates),
+    } as Record<string, string | null>,
+  };
 });
