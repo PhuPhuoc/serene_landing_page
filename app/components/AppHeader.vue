@@ -26,13 +26,25 @@ const linkProps = (l: { to: string; external: boolean; newTab: boolean }) => ({
   target: l.newTab ? "_blank" : undefined,
   rel: l.external ? "noopener noreferrer" : undefined,
 });
+
+const isScrolled = ref(false);
+
+function handleScroll() {
+  isScrolled.value = window.scrollY > 20;
+}
+
+onMounted(() => {
+  handleScroll();
+  window.addEventListener("scroll", handleScroll, { passive: true });
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
 </script>
 
 <template>
-  <header
-    v-if="nav"
-    class="flex items-center justify-between gap-3 px-[5.5vw] border-b border-[var(--color-border)] h-[75px]"
-  >
+  <header v-if="nav" class="site-header" :class="{ 'is-scrolled': isScrolled }">
     <NuxtLink
       :to="localePath('/the-club')"
       class="site-header__logo"
@@ -93,16 +105,69 @@ const linkProps = (l: { to: string; external: boolean; newTab: boolean }) => ({
 </template>
 
 <style scoped>
+.site-header {
+  @apply fixed top-0 left-0 right-0 z-50
+    flex items-center justify-between gap-3
+    px-[5.5vw]
+    h-[75px]
+    border-b border-transparent;
+
+  /*
+   * Transparent state
+   * Header nằm trên Hero
+   */
+  --header-text: var(--color-paper);
+  --header-text-muted: rgba(253, 249, 242, 0.8);
+  --header-text-light: rgba(253, 249, 242, 0.7);
+  --header-border: rgba(253, 249, 242, 0.35);
+
+  color: var(--header-text);
+  background-color: transparent;
+  border-color: transparent;
+
+  transition:
+    color 250ms ease,
+    background-color 250ms ease,
+    border-color 250ms ease,
+    box-shadow 250ms ease;
+}
+
+/*
+ * Scrolled state
+ */
+.site-header.is-scrolled {
+  --header-text: var(--color-text);
+  --header-text-muted: var(--color-text-muted);
+  --header-text-light: var(--color-text-light);
+  --header-border: var(--color-border);
+
+  background-color: var(--color-bg);
+  border-color: var(--header-border);
+
+  box-shadow: 0 4px 20px rgba(42, 26, 18, 0.04);
+}
+
 .nav-link {
-  @apply text-[var(--color-text-muted)] font-display text-[14px] font-[400] tracking-[0.01em] transition-colors duration-150;
+  @apply font-display
+    text-[14px]
+    font-[400]
+    tracking-[0.01em]
+    transition-colors duration-150;
+
+  color: var(--header-text-muted);
 }
 
 .nav-link:hover {
-  @apply text-[var(--color-text)];
+  color: var(--header-text);
 }
 
 .nav-link.is-active {
-  @apply text-[var(--color-text)] underline underline-offset-4 decoration-1 font-medium;
+  color: var(--header-text);
+
+  @apply underline
+    underline-offset-4
+    decoration-1
+    font-medium;
 }
 
 /* Language switcher */

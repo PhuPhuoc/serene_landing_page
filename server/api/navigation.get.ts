@@ -1,53 +1,6 @@
 // server/api/navigation.get.ts
-import { strapiFetch } from "../utils/strapi";
-
-type StrapiLink = {
-  id: number;
-  label: string;
-  externalUrl?: string | null;
-  openInNewTab?: boolean;
-  page?: { slug: string } | null;
-};
-
-type StrapiMedia = {
-  url: string;
-  alternativeText?: string | null;
-  width?: number;
-  height?: number;
-};
-
-type StrapiHeader = {
-  logo: StrapiMedia;
-  mainLinks?: StrapiLink[];
-  utilityLink?: StrapiLink | null;
-  cta?: StrapiLink | null;
-};
-
-type NavLink = {
-  id: number;
-  label: string;
-  external: boolean;
-  to: string;
-  newTab: boolean;
-};
-
-const linkPopulate = { populate: { page: { fields: ["slug"] } } };
-
-function mapLink(l?: StrapiLink | null): NavLink | null {
-  if (!l) return null;
-  const external = !l.page;
-  return {
-    id: l.id,
-    label: l.label,
-    external,
-    to: l.page
-      ? l.page.slug === "home"
-        ? "/"
-        : `/${l.page.slug}`
-      : (l.externalUrl ?? "#"),
-    newTab: !!l.openInNewTab,
-  };
-}
+import { StrapiHeader } from "../types/strapi.ts";
+import { strapiFetch, NavLink, linkPopulate, mapLink } from "../utils/strapi";
 
 export default defineEventHandler(async (event) => {
   const { strapiUrl } = useRuntimeConfig();
