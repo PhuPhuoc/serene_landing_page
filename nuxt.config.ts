@@ -18,8 +18,6 @@ export default defineNuxtConfig({
     configPath: "~~/tailwind.config.ts",
   },
 
-  css: ["~~/assets/css/global.css"],
-
   runtimeConfig: {
     strapiUrl: "http://localhost:1337",
     strapiToken: "",
@@ -31,7 +29,8 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: "Serene Saigon",
+      // title: "Serene Saigon",
+      titleTemplate: "%s | Serene",
       link: [{ rel: "icon", type: "image/jpeg", href: "/logos/logo.jpg" }],
     },
   },

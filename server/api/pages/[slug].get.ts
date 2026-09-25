@@ -7,6 +7,7 @@ type StrapiPage = {
   title: string;
   slug: string;
   locale: string;
+  hidden?: boolean;
   // sau này thêm: blocks, seo
 };
 
@@ -21,7 +22,7 @@ export default defineEventHandler(async (event) => {
   });
 
   const page = res.data[0];
-  if (!page)
+  if (!page || page.hidden)
     throw createError({ statusCode: 404, statusMessage: "Page not found" });
   return page;
 });
