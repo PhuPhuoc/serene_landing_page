@@ -70,6 +70,13 @@ useSeoMeta({
         :tags="block.tags"
         :cta="block.cta"
       />
+
+      <BlocksDayInLife
+        v-else-if="block.__component === 'blocks.day-in-life'"
+        :eyebrow="block.eyebrow"
+        :heading="block.heading"
+        :items="block.items"
+      />
     </template>
   </main>
 </template>

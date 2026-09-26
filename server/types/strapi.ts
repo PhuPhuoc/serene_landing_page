@@ -58,7 +58,26 @@ export type StrapiIntroBlock = {
   cta?: StrapiLink | null;
 };
 
-export type StrapiPageBlock = StrapiHeroBlock | StrapiIntroBlock;
+export type StrapiDayItem = {
+  id: number;
+  period: string;
+  title: string;
+  image?: StrapiMedia | null;
+  imageCaption?: string | null;
+  description: string;
+  cta?: StrapiLink | null;
+};
+
+export type StrapiDayInLifeBlock = {
+  __component: "blocks.day-in-life";
+  id: number;
+  eyebrow?: string | null;
+  heading: string;
+  items: StrapiDayItem[];
+};
+
+export type StrapiPageBlock =
+  StrapiHeroBlock | StrapiIntroBlock | StrapiDayInLifeBlock;
 
 export type StrapiPage = {
   id: number;

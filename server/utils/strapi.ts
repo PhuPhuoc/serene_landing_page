@@ -1,5 +1,6 @@
 // server/utils/strapi.ts
 import qs from "qs";
+import { StrapiLink } from "../types/strapi";
 
 export async function strapiFetch<T = unknown>(
   path: string,

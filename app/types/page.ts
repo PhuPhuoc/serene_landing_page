@@ -57,7 +57,31 @@ export type IntroBlock = {
   cta?: NavLink | null;
 };
 
-export type PageBlock = HeroBlock | IntroBlock;
+export type DayItem = {
+  id: number;
+  period: string;
+  title: string;
+  image: {
+    url: string;
+    alternativeText?: string | null;
+    width?: number;
+    height?: number;
+    formats?: Record<string, { url: string }>;
+  } | null;
+  imageCaption?: string | null;
+  description: string;
+  cta?: NavLink | null;
+};
+
+export type DayInLifeBlock = {
+  __component: "blocks.day-in-life";
+  id: number;
+  eyebrow?: string | null;
+  heading: string;
+  items: DayItem[];
+};
+
+export type PageBlock = HeroBlock | IntroBlock | DayInLifeBlock;
 
 export type PageResponse = {
   id: number;

@@ -1,3 +1,4 @@
+// serve/api/pages/[slug].get.ts
 import type {
   StrapiPage,
   StrapiPageBlock,
@@ -20,7 +21,9 @@ function getAbsoluteUrl(baseUrl: string, url?: string | null) {
   return url.startsWith("http") ? url : `${baseUrl}${url}`;
 }
 
-function mapMedia(media: StrapiMedia, strapiUrl: string) {
+function mapMedia(media: StrapiMedia | null | undefined, strapiUrl: string) {
+  if (!media) return null;
+
   return {
     url: getAbsoluteUrl(strapiUrl, media.url),
 
@@ -85,6 +88,27 @@ function mapBlock(block: StrapiPageBlock, strapiUrl: string) {
         tags: block.tags ?? [],
 
         cta: mapLink(block.cta),
+      };
+
+    case "blocks.day-in-life":
+      return {
+        __component: block.__component,
+
+        id: block.id,
+
+        eyebrow: block.eyebrow,
+
+        heading: block.heading,
+
+        items: (block.items ?? []).map((item) => ({
+          id: item.id,
+          period: item.period,
+          title: item.title,
+          image: mapMedia(item.image, strapiUrl),
+          imageCaption: item.imageCaption,
+          description: item.description,
+          cta: mapLink(item.cta),
+        })),
       };
   }
 }
@@ -161,6 +185,17 @@ export default defineEventHandler(async (event) => {
                 cta: linkPopulate,
               },
             },
+
+            "blocks.day-in-life": {
+              populate: {
+                items: {
+                  populate: {
+                    image: true,
+                    cta: linkPopulate,
+                  },
+                },
+              },
+            },
           },
         },
       },
@@ -220,78 +255,3 @@ export default defineEventHandler(async (event) => {
     } as Record<string, string | null>,
   };
 });
-// server/api/pages/[slug].get.ts
-// import { StrapiPage } from "~~/server/types/strapi";
-// import { strapiFetch, linkPopulate } from "~~/server/utils/strapi";
-//
-// const SUPPORTED_LOCALES = ["en", "vi"] as const;
-//
-// async function getSlugForLocale(documentId: string, locale: string) {
-//   try {
-//     const res = await strapiFetch<{
-//       data: { slug: string; hidden?: boolean } | null;
-//     }>(`/pages/${documentId}`, { locale, fields: ["slug", "hidden"] });
-//     if (!res.data || res.data.hidden) return null;
-//     return res.data.slug;
-//   } catch {
-//     return null; // bản dịch locale này chưa tồn tại/chưa publish
-//   }
-// }
-//
-// export default defineEventHandler(async (event) => {
-//   const slug = getRouterParam(event, "slug")!;
-//   const locale = getQuery(event).locale === "vi" ? "vi" : "en";
-//
-//   let res;
-//   try {
-//     res = await strapiFetch<{ data: StrapiPage[] }>("/pages", {
-//       locale,
-//       filters: { slug: { $eq: slug } },
-//       populate: {
-//         blocks: {
-//           on: {
-//             "blocks.hero": {
-//               populate: {
-//                 backgroundImage: true,
-//                 primaryCta: linkPopulate,
-//                 secondaryCta: linkPopulate,
-//               },
-//             },
-//             "blocks.intro": {
-//               populate: {
-//                 tags: true,
-//                 cta: linkPopulate,
-//               },
-//             },
-//           },
-//         },
-//       },
-//     });
-//   } catch (err: any) {
-//     console.error("Strapi error:", err?.data ?? err?.message ?? err);
-//
-//     throw createError({
-//       statusCode: err?.statusCode ?? 500,
-//       statusMessage: "Strapi fetch failed",
-//     });
-//   }
-//   const page = res.data[0];
-//   if (!page || page.hidden) {
-//     throw createError({ statusCode: 404, statusMessage: "Page not found" });
-//   }
-//
-//   const otherLocales = SUPPORTED_LOCALES.filter((l) => l !== locale);
-//   const alternates = await Promise.all(
-//     otherLocales.map(
-//       async (l) => [l, await getSlugForLocale(page.documentId, l)] as const,
-//     ),
-//   );
-//
-//   return {
-//     ...page,
-//     alternateSlugs: {
-//       [locale]: page.slug,
-//       ...Object.fromEntries(alternates),
-//     } as Record<string, string | null>,
-//   };
-// });
